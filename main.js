@@ -174,4 +174,87 @@
   window.addEventListener('load', navmenuScrollspy);
   document.addEventListener('scroll', navmenuScrollspy);
 
+  // TradingViewWidget.jsx
+import React, { useEffect, useRef, memo } from 'react';
+
+function TradingViewWidget() {
+  const container = useRef();
+
+  useEffect(
+    () => {
+      const script = document.createElement("script");
+      script.src = "https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js";
+      script.type = "text/javascript";
+      script.async = true;
+      script.innerHTML = `
+        {
+          "symbols": [
+            {
+              "proName": "BITSTAMP:BTCUSD",
+              "title": "Bitcoin"
+            },
+            {
+              "proName": "BITSTAMP:ETHUSD",
+              "title": "Ethereum"
+            },
+            {
+              "proName": "TVC:GOLD",
+              "title": "Gold"
+            },
+            {
+              "proName": "AMEX:SPY",
+              "title": "S&P 500"
+            },
+            {
+              "proName": "BINANCE:SOLUSDT",
+              "title": "Solana"
+            },
+            {
+              "proName": "BINANCE:XRPUSDT",
+              "title": "Ripple"
+            },
+            {
+              "proName": "BINANCE:AVAXUSDT",
+              "title": ""
+            },
+            {
+              "proName": "CME_MINI:ES1!",
+              "title": ""
+            },
+            {
+              "proName": "MCX:CRUDEOIL1!",
+              "title": "Crude"
+            },
+            {
+              "proName": "NASDAQ:TSLA",
+              "title": "Tesla"
+            },
+            {
+              "proName": "NASDAQ:META",
+              "title": "Meta"
+            }
+          ],
+          "colorTheme": "dark",
+          "locale": "en",
+          "largeChartUrl": "",
+          "isTransparent": false,
+          "showSymbolLogo": true,
+          "displayMode": "adaptive"
+        }`;
+      container.current.appendChild(script);
+    },
+    []
+  );
+
+  return (
+    <div className="tradingview-widget-container" ref={container}>
+      <div className="tradingview-widget-container__widget"></div>
+      <div className="tradingview-widget-copyright"><a href="https://www.tradingview.com/markets/" rel="noopener nofollow" target="_blank"><span className="blue-text">Ticker tape</span></a><span className="trademark"> by TradingView</span></div>
+    </div>
+  );
+}
+
+export default memo(TradingViewWidget);
+
+
 })();
